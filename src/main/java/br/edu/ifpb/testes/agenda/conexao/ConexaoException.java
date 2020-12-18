@@ -1,4 +1,4 @@
-package br.edu.ifpb.testes.carrinho.conexao;
+package br.edu.ifpb.testes.agenda.conexao;
 
 public class ConexaoException extends Throwable {
 

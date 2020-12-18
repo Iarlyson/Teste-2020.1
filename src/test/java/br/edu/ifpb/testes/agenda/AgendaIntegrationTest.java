@@ -1,11 +1,8 @@
-package br.edu.ifpb.testes.carrinho;
+package br.edu.ifpb.testes.agenda;
 
-import br.edu.ifpb.testes.carrinho.contato.Contato;
-import br.edu.ifpb.testes.carrinho.contato.ContatoDAO;
-import br.edu.ifpb.testes.carrinho.estoque.Agenda;
-import br.edu.ifpb.testes.carrinho.estoque.AgendaImpl;
-import br.edu.ifpb.testes.carrinho.contato.ContatoDAOImpl;
-import br.edu.ifpb.testes.carrinho.contato.ContatoForadeBancoException;
+import br.edu.ifpb.testes.agenda.contato.Contato;
+import br.edu.ifpb.testes.agenda.contato.ContatoDAO;
+import br.edu.ifpb.testes.agenda.contato.ContatoForadeAgendaException;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.dataset.DataSetException;
@@ -24,11 +21,11 @@ import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class CarrinhoImplIntegrationTest {
+public class AgendaIntegrationTest {
 
     private JdbcDatabaseContainer container;
     private IDatabaseTester databaseTester;
-    private Cadastro cadastro;
+    private Agenda agenda;
     private Connection conexao;
 
     @Before
@@ -42,13 +39,14 @@ public class CarrinhoImplIntegrationTest {
         }
         configurarDBUnit();
         this.databaseTester.onSetup();
-        ContatoDAO contatoDAO = new ContatoDAOImpl(conexao);
-        Agenda agenda = new AgendaImpl(contatoDAO);
-        cadastro = new CadastroImpl(agenda);
+        ContatoDAO contatoDAO = new ContatoDAO(conexao);
+        // tirar agenda e botar em cadastro.
+        agenda = new Agenda(contatoDAO);
+        //agenda = new Agenda(agenda2);
     }
 
     private void configurarDBUnit() throws ClassNotFoundException, FileNotFoundException, DataSetException {
-        IDataSet dataSet = new FlatXmlDataSetBuilder().build(new FileInputStream(("src/test/resources/produtos_testset.xml")));
+        IDataSet dataSet = new FlatXmlDataSetBuilder().build(new FileInputStream(("src/test/resources/agenda.xml")));
         this.databaseTester = new JdbcDatabaseTester("org.postgresql.Driver",
                 container.getJdbcUrl(), "postgresql", "123456");
         this.databaseTester.setDataSet(dataSet);
@@ -56,20 +54,20 @@ public class CarrinhoImplIntegrationTest {
         this.databaseTester.setTearDownOperation(DatabaseOperation.DELETE);
     }
 
+    /*Verificar se já está no banco, se estiver ele retonar o que está no banco*/
     @Test
-    public void consultarContatoDisponivel() throws ContatoForadeBancoException {
-        Contato contatoDisponivel = new Contato(1,
-                "Iarlyson","83999445858");
-        this.cadastro.adicionarItem(contatoDisponivel);
-        Assert.assertEquals(1, this.cadastro.getQtdeItens());
+    public void consultarContatoDisponivel() throws ContatoForadeAgendaException {
+        Contato contato = new Contato(5,"Iarlyson","8399445858");
+
+        Assert.assertEquals(true, this.agenda.temContato(contato));
     }
 
-    @Test(expected = ContatoForadeBancoException.class)
-    public void consultarQuandoContatoIndisponivel() throws ContatoForadeBancoException {
-        Contato contatoIndisponivel = new Contato(5,
-                "Lucas","84999554555");
-        this.cadastro.adicionarItem(contatoIndisponivel);
+    @Test(expected = ContatoForadeAgendaException.class)
+    public void consultarQuandoContatoIndisponivel() throws ContatoForadeAgendaException {
+        Contato contatoIndisponivel = new Contato(5,"Iarlyson","84999554555");
+        this.agenda.temContato(contatoIndisponivel);
     }
+
 
     @After
     public void finalizar() throws Exception {

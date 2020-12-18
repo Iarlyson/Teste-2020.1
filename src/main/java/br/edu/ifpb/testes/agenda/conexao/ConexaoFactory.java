@@ -1,4 +1,4 @@
-package br.edu.ifpb.testes.carrinho.conexao;
+package br.edu.ifpb.testes.agenda.conexao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

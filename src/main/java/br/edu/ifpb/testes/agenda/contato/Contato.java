@@ -1,4 +1,4 @@
-package br.edu.ifpb.testes.carrinho.contato;
+package br.edu.ifpb.testes.agenda.contato;
 
 import java.util.Objects;
 
@@ -66,6 +66,6 @@ public class Contato  {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(nome);
     }
 }

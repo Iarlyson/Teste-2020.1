@@ -1,7 +1,7 @@
-package br.edu.ifpb.testes.carrinho.contato;
+package br.edu.ifpb.testes.agenda.contato;
 
-import br.edu.ifpb.testes.carrinho.conexao.ConexaoException;
-import br.edu.ifpb.testes.carrinho.conexao.ConexaoFactory;
+import br.edu.ifpb.testes.agenda.conexao.ConexaoException;
+import br.edu.ifpb.testes.agenda.conexao.ConexaoFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,11 +10,11 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ContatoDAOImpl implements ContatoDAO {
+public class ContatoDAO {
 
     private Connection conexao;
 
-    public ContatoDAOImpl() {
+    public ContatoDAO() {
         try {
             this.conexao = ConexaoFactory.getConnection();
         } catch (ConexaoException e) {
@@ -22,11 +22,10 @@ public class ContatoDAOImpl implements ContatoDAO {
         }
     }
 
-    public ContatoDAOImpl(Connection conexao) {
+    public ContatoDAO(Connection conexao) {
         this.conexao = conexao;
     }
 
-    @Override
     public void salvar(Contato c) throws SQLException {
         String query = "INSERT INTO agenda(nome, telefone) VALUES (?, ?)";
         PreparedStatement preparedStatement = this.conexao.prepareStatement(query);
@@ -37,7 +36,6 @@ public class ContatoDAOImpl implements ContatoDAO {
 
 
 
-    @Override
     public List<Contato> listar() throws SQLException {
         String query = "SELECT * FROM agenda";
         List<Contato> contatos = new LinkedList<>();
