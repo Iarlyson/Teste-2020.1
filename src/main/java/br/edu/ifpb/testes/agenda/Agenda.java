@@ -68,7 +68,7 @@ public class Agenda {
         return this.contatos.size();
     }
 
-    public boolean removerItem(Contato contato) throws SQLException {
+    public boolean removerItem(Contato contato) {
         return contatos.remove(contato);
     }
 
