@@ -26,12 +26,20 @@ public class ContatoDAO {
         this.conexao = conexao;
     }
 
-    public void salvar(Contato c) throws SQLException {
-        String query = "INSERT INTO agenda(nome, telefone) VALUES (?, ?)";
-        PreparedStatement preparedStatement = this.conexao.prepareStatement(query);
-        preparedStatement.setString(1, c.getNome());
-        preparedStatement.setString(2, c.getTelefone());
-        preparedStatement.execute();
+    public boolean salvar(Contato c) throws SQLException {
+        try {
+            String query = "INSERT INTO agenda(id, nome, telefone) VALUES (?, ?, ?)";
+            PreparedStatement preparedStatement = this.conexao.prepareStatement(query);
+            preparedStatement.setLong(1, c.getId());
+            preparedStatement.setString(2, c.getNome());
+            preparedStatement.setString(3, c.getTelefone());
+            preparedStatement.execute();
+
+            return true;
+        }catch (SQLException sql){
+            return false;
+        }
+
     }
 
 
@@ -51,5 +59,35 @@ public class ContatoDAO {
         }
         return contatos;
     }
+/*
+
+    somar recebe ( x, y) {
+        resutlado = x + y;
+        return resultado;
+    }
+
+    mutiplicação = 5 * 3;
+
+    resultado = mutiplicação + somar(5,3);
+
+
+
+    public List<Contato> apagar() throws SQLException {
+        String query = "SELECT * FROM agenda";
+        List<Contato> contatos = new LinkedList<>();
+        PreparedStatement preparedStatement = conexao.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while(resultSet.next()) {
+            Contato contato = new Contato(
+                    resultSet.getLong(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3)
+            );
+            contatos.add(contato);
+        }
+        return contatos;
+    }*/
+
+
 
 }

@@ -5,17 +5,14 @@ import br.edu.ifpb.testes.agenda.contato.ContatoDAO;
 import br.edu.ifpb.testes.agenda.contato.ContatoForadeAgendaException;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Agenda {
 
     private ContatoDAO contatoDAO;
-    private List<Contato> contatos = new LinkedList<Contato>();
-
-    private Agenda agenda;
-
+    private List<Contato> contatos = new ArrayList<Contato>();
 
     public Agenda() {
         this.contatoDAO = new ContatoDAO();
@@ -25,10 +22,14 @@ public class Agenda {
         this.contatoDAO = contatoDAO;
     }
 
-    public void adicionarContato(Contato contato) throws ContatoForadeAgendaException {
-        this.agenda.contatos.add(contato);
+
+    public boolean adicionarContatoDao(Contato contato) throws SQLException {
+        return contatoDAO.salvar(contato);
     }
 
+    public boolean adicionarContato(Contato contato){
+        return contatos.add(contato);
+    }
     public boolean temNaAgenda(Contato contato) throws ContatoForadeAgendaException {
         try {
             for (int i = 0; i < this.contatoDAO.listar().size(); i++) {
@@ -56,23 +57,19 @@ public class Agenda {
     }
 
     public boolean  temContato(Contato contato) throws ContatoForadeAgendaException {
-        if (temNaAgenda(contato)){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return temNaAgenda(contato);
     }
 
-    /*
+    public int getQtdeItensDao() throws SQLException {
+        return this.contatoDAO.listar().size();
+    }
+
     public int getQtdeItens() {
         return this.contatos.size();
     }
 
-
-    public void removerItem(Contato contato) {
-        this.contatos.remove(contato);
+    public boolean removerItem(Contato contato) throws SQLException {
+        return contatos.remove(contato);
     }
-    */
 
 }
