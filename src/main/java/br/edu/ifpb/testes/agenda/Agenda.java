@@ -27,9 +27,17 @@ public class Agenda {
         return contatoDAO.salvar(contato);
     }
 
-    public boolean adicionarContato(Contato contato){
-        return contatos.add(contato);
+    public void adicionarContato(Contato contato){
+        if(!this.contatos.contains(contato)){
+            contatos.add(contato);
+        }
     }
+
+    public void removerContato(Contato contato) {
+        contatos.remove(contato);
+    }
+
+
     public boolean temNaAgenda(Contato contato) throws ContatoForadeAgendaException {
         try {
             for (int i = 0; i < this.contatoDAO.listar().size(); i++) {
@@ -46,7 +54,6 @@ public class Agenda {
         return false;
     }
 
-
     public List<Contato> getContatoBanco() {
         try {
             return this.contatoDAO.listar();
@@ -56,20 +63,26 @@ public class Agenda {
         }
     }
 
-    public boolean  temContato(Contato contato) throws ContatoForadeAgendaException {
-        return temNaAgenda(contato);
+    public boolean temContato(Contato contato) {
+        return this.contatos.contains(contato);
     }
 
-    public int getQtdeItensDao() throws SQLException {
+    public int getNumeroContatosDao() throws SQLException {
         return this.contatoDAO.listar().size();
     }
 
-    public int getQtdeItens() {
+    public int getNumeroContatos() {
         return this.contatos.size();
     }
 
-    public boolean removerItem(Contato contato) {
-        return contatos.remove(contato);
+    public void ordenaContatos(){
+        Collections.sort(this.contatos);
     }
 
+    @Override
+    public String toString() {
+        return "Agenda{" +
+                "contatos=" + contatos +
+                '}';
+    }
 }

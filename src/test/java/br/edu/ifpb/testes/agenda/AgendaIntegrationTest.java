@@ -79,7 +79,7 @@ public class AgendaIntegrationTest {
     public void adcionarContatonaAgenda() throws SQLException{
         Contato contatoADD = new Contato(3,"GEAN", "83996167660");
             agenda.adicionarContatoDao(contatoADD);
-            Assert.assertEquals(3, agenda.getQtdeItensDao());
+            Assert.assertEquals(3, agenda.getNumeroContatosDao());
     }
 
     @After
