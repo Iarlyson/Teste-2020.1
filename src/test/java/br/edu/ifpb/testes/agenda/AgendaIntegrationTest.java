@@ -41,9 +41,7 @@ public class AgendaIntegrationTest {
         configurarDBUnit();
         this.databaseTester.onSetup();
         ContatoDAO contatoDAO = new ContatoDAO(conexao);
-        // tirar agenda e botar em cadastro.
         agenda = new Agenda(contatoDAO);
-        //agenda.getLista();
     }
 
     private void configurarDBUnit() throws ClassNotFoundException, FileNotFoundException, DataSetException {
@@ -90,13 +88,6 @@ public class AgendaIntegrationTest {
         Assert.assertEquals(true, this.agenda.atualizarContatoDao(contatoRemover));
     }
 
-    @Test
-    public void removerContatodeAgenda() throws SQLException {
-        // Criando o objeto
-        Contato contatoRemover = new Contato(1,"Iarlyson", "83999445858");
-        // Removendo na lista e comparando com o resultado que espero
-        Assert.assertEquals(true, this.agenda.removerContatoDao(contatoRemover));
-    }
 
     @After
     public void finalizar() throws Exception {
