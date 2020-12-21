@@ -88,6 +88,13 @@ public class AgendaIntegrationTest {
         Assert.assertEquals(true, this.agenda.atualizarContatoDao(contatoRemover));
     }
 
+    @Test
+    public void removerContatodeAgenda() throws SQLException {
+        // Criando o objeto
+        Contato contatoRemover = new Contato(1,"Iarlyson", "83999445858");
+        // Removendo na lista e comparando com o resultado que espero
+        Assert.assertEquals(true, this.agenda.removerContatoDao(contatoRemover));
+    }
 
     @After
     public void finalizar() throws Exception {

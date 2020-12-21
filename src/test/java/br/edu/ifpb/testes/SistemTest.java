@@ -44,26 +44,5 @@ public class SistemTest {
         } catch (Exception e) {
         }
     }
-    @Test
-    public void testFazerLoginCerto(){
-            navegador.get("https://iarlyson.github.io/SiteTesteSystem/html/login.html");
-            navegador.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
-            navegador.findElement(By.id("emailLogin")).sendKeys("usuarioteste@gmail.com");
-            navegador.findElement(By.id("senhaLogin")).sendKeys("123456");
-            navegador.findElement(By.id("butãoLogin")).click();;
-            try {
-                WebDriverWait wait = new WebDriverWait(navegador, 5);
-                Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-                Thread.sleep(3000);
-                String mensagem = navegador.switchTo().alert().getText();
-                Thread.sleep (3000);
-                // Aceitando alerta
-                //alert.accept();
-                Assert.assertEquals("Logado com sucesso", mensagem);
-                navegador.quit();
-            } catch (Exception e) {
-            }
-    }
 
 }
