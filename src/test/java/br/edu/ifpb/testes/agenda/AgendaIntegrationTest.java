@@ -55,31 +55,47 @@ public class AgendaIntegrationTest {
         this.databaseTester.setTearDownOperation(DatabaseOperation.DELETE);
     }
 
-    /*Verificar se já está no banco, se estiver ele retonar o que está no banco*/
-    @Test
-    public void consultarContatoDisponivel() throws ContatoForadeAgendaException {
-        Contato contato = new Contato(1,"Iarlyson","8399445858");
-
-        Assert.assertEquals(true, this.agenda.temContato(contato));
-    }
-
-    @Test(expected = ContatoForadeAgendaException.class)
-    public void consultarQuandoContatoIndisponivel() throws ContatoForadeAgendaException {
-        Contato contatoIndisponivel = new Contato(1,"Iarlysons","84999554555");
-        this.agenda.temContato(contatoIndisponivel);
-    }
-/*
-    @Test
-    public void removerContatodeAgenda() throws SQLException {
-        Contato contatoRemover = new Contato(1,"Iarlyso", "83999445858");
-        Assert.assertEquals(true, this.agenda.removerItem(contatoRemover));
-    }
-*/
     @Test
     public void adcionarContatonaAgenda() throws SQLException{
+        // Criando o objeto e adicionado na lista
         Contato contatoADD = new Contato(3,"GEAN", "83996167660");
-            agenda.adicionarContatoDao(contatoADD);
-            Assert.assertEquals(3, agenda.getNumeroContatosDao());
+        agenda.adicionarContatoDao(contatoADD);
+
+        // comparando com o resultado que espero
+        Assert.assertEquals(3, agenda.getQtdeNumeroContatosDao());
+    }
+
+    /*Verificar pelo nome se já está no banco, se estiver ele retonar  que está no banco*/
+    @Test
+    public void consultarContatoDisponivel() throws ContatoForadeAgendaException {
+        // Criando o objeto
+        Contato contato = new Contato(1,"Iarlyson","8399445858");
+        // comparando com o resultado que espero
+        Assert.assertEquals(true, this.agenda.temNaAgenda(contato));
+    }
+
+    /*Verificar pelo nome se já está no banco, se não estiver ele retonar uma exceção*/
+    @Test(expected = ContatoForadeAgendaException.class)
+    public void consultarQuandoContatoIndisponivel() throws ContatoForadeAgendaException {
+        // Criando o objeto
+        Contato contatoIndisponivel = new Contato(1,"Iarlysons","84999554555");
+        this.agenda.temNaAgenda(contatoIndisponivel);
+    }
+
+    @Test
+    public void atualizarContatodeAgenda() throws SQLException {
+        // Criando o objeto
+        Contato contatoRemover = new Contato(1,"Iarlyson", "83999445857");
+        // Atualizando a agenda e comparando com o resultado que espero
+        Assert.assertEquals(true, this.agenda.atualizarContatoDao(contatoRemover));
+    }
+
+    @Test
+    public void removerContatodeAgenda() throws SQLException {
+        // Criando o objeto
+        Contato contatoRemover = new Contato(1,"Iarlyson", "83999445858");
+        // Removendo na lista e comparando com o resultado que espero
+        Assert.assertEquals(true, this.agenda.removerContatoDao(contatoRemover));
     }
 
     @After
@@ -89,4 +105,4 @@ public class AgendaIntegrationTest {
     }
 
 
-}
+}// fim do teste

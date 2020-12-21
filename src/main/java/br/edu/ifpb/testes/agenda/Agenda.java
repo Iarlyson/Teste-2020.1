@@ -33,10 +33,41 @@ public class Agenda {
         }
     }
 
+
+    public boolean atualizarContatoDao(Contato contato) throws SQLException {
+        for (int i = 0; i < this.contatoDAO.listar().size(); i++) {
+            if (this.contatoDAO.listar().get(i).getNome().equals(contato.getNome())){
+                contatoDAO.atualizar(contato);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public boolean atualizarContato(Contato contato) {
+
+          for (int i = 0; i < this.contatos.size(); i++) {
+              if (contatos.get(i).getNome().equals(contato.getNome())) {
+                  contatos.set(i, contato);
+                  return true;
+              }
+          }
+          return false;
+    }
+
+    public boolean removerContatoDao(Contato contato) throws SQLException {
+        for (int i = 0; i < this.contatoDAO.listar().size(); i++) {
+            if (this.contatoDAO.listar().get(i).getNome().equals(contato.getNome())) {
+                return contatoDAO.excluir(contato);
+            }
+        }
+        return false;
+    }
+
     public void removerContato(Contato contato) {
         contatos.remove(contato);
     }
-
 
     public boolean temNaAgenda(Contato contato) throws ContatoForadeAgendaException {
         try {
@@ -54,6 +85,27 @@ public class Agenda {
         return false;
     }
 
+    public boolean temContato(Contato contato) {
+        return this.contatos.contains(contato);
+    }
+
+
+    public int getQtdeNumeroContatosDao() throws SQLException {
+        for (int i = 0; i < this.contatoDAO.listar().size(); i++) {
+            System.out.println( this.contatoDAO.listar().get(i).getNome());
+        }
+            return this.contatoDAO.listar().size();
+    }
+
+
+    public int getQtdeNumeroContatos() {
+        return this.contatos.size();
+    }
+
+    public void ordenaContatos(){
+        Collections.sort(this.contatos);
+    }
+
     public List<Contato> getContatoBanco() {
         try {
             return this.contatoDAO.listar();
@@ -61,22 +113,6 @@ public class Agenda {
             throwables.printStackTrace();
             return Collections.emptyList();
         }
-    }
-
-    public boolean temContato(Contato contato) {
-        return this.contatos.contains(contato);
-    }
-
-    public int getNumeroContatosDao() throws SQLException {
-        return this.contatoDAO.listar().size();
-    }
-
-    public int getNumeroContatos() {
-        return this.contatos.size();
-    }
-
-    public void ordenaContatos(){
-        Collections.sort(this.contatos);
     }
 
     @Override

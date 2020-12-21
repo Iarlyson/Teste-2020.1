@@ -11,29 +11,46 @@ public class AgendaUnitTest {
 
     @Before
     public void prepararCenario() {
+        //Criando a agenda para os testes
         agenda = new Agenda();
-
     }
 
     @Test
     public void insertirContato() {
-        // Realizar o estímulo ao sistema
+        // Criando o objeto e adicionado na lista
         Contato novoContato = new Contato(1, "Bruno", "8354564884946");
         agenda.adicionarContato(novoContato);
 
-        // Comparar a saída com o que eu espero (requisito)
-        Assert.assertEquals(1, agenda.getNumeroContatos());
+        // comparando com o resultado que espero
+        Assert.assertEquals(1, agenda.getQtdeNumeroContatos());
+    }
+
+
+    @Test
+    public void atualizarrContato() {
+        // Criando o objeto e adicionado na lista
+        Contato novoContato = new Contato(1, "Iarlyson", "83999445858");
+        agenda.adicionarContato(novoContato);
+        // comparando com o resultado que espero
+        Assert.assertEquals(1, agenda.getQtdeNumeroContatos());
+
+        // Atualizando o objeto e adicionado na lista
+        Contato updateContato = new Contato(1, "Iarlyson", "83545648849");
+
+        // comparando com o resultado que espero
+        Assert.assertEquals(true, agenda.atualizarContato(updateContato));
     }
 
     @Test
     public void removerContato() {
-
+        // Criando o objeto e adicionado na lista
         Contato novoContato = new Contato(1, "Bruno", "8354564884946");
         agenda.adicionarContato(novoContato);
 
-        Assert.assertTrue(agenda.getNumeroContatos() == 1);
+        // comparando com o resultado que espero
+        Assert.assertTrue(agenda.getQtdeNumeroContatos() == 1);
         agenda.removerContato(novoContato);
-        Assert.assertTrue(agenda.getNumeroContatos() == 0);
+        Assert.assertTrue(agenda.getQtdeNumeroContatos() == 0);
     }
 
     @Test
@@ -51,7 +68,7 @@ public class AgendaUnitTest {
 
         // verificando se a agenda está vazia
 
-        Assert.assertTrue(agenda.getNumeroContatos() == 0);
+        Assert.assertTrue(agenda.getQtdeNumeroContatos() == 0);
 
         // adicionando os dois primeiros contatos à agenda
 
@@ -60,7 +77,7 @@ public class AgendaUnitTest {
 
         // verificando se a agenda possui dois contatos
 
-        Assert.assertTrue(agenda.getNumeroContatos() == 2);
+        Assert.assertTrue(agenda.getQtdeNumeroContatos() == 2);
 
         Assert.assertTrue(agenda.temContato(contato1));
         Assert.assertTrue(agenda.temContato(contato2));
@@ -71,7 +88,7 @@ public class AgendaUnitTest {
 
         // confirmando que a lista só terá 2 contatos mesmo tentando inserir o terceiro
         agenda.adicionarContato(contato3);
-        Assert.assertTrue(agenda.getNumeroContatos() == 2);
+        Assert.assertTrue(agenda.getQtdeNumeroContatos() == 2);
     }
 
     @Test

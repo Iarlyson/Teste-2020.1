@@ -26,6 +26,7 @@ public class ContatoDAO {
         this.conexao = conexao;
     }
 
+/*Metódo para salvar contato no banco da agenda*/
     public boolean salvar(Contato c) throws SQLException {
         try {
             String query = "INSERT INTO agenda(id, nome, telefone) VALUES (?, ?, ?)";
@@ -43,7 +44,7 @@ public class ContatoDAO {
     }
 
 
-
+    /*Metódo para listar contatos no banco da agenda*/
     public List<Contato> listar() throws SQLException {
         String query = "SELECT * FROM agenda";
         List<Contato> contatos = new LinkedList<>();
@@ -59,34 +60,37 @@ public class ContatoDAO {
         }
         return contatos;
     }
-/*
 
-    somar recebe ( x, y) {
-        resutlado = x + y;
-        return resultado;
+    /*Metódo para atualizar contato no banco da agenda*/
+    public boolean atualizar(Contato c) throws SQLException {
+        try {
+            String query = "UPDATE agenda SET telefone = ? WHERE nome = ?";
+            PreparedStatement preparedStatement = this.conexao.prepareStatement(query);
+            preparedStatement.setString(1, c.getTelefone());
+            preparedStatement.setString(2, c.getNome());
+            preparedStatement.execute();
+
+            return true;
+        } catch (SQLException sql) {
+            return false;
+        }
     }
 
-    mutiplicação = 5 * 3;
+    /*Metódo para excluir contato no banco da agenda*/
+    public boolean excluir(Contato c) throws SQLException {
+        try {
+            String query = "DELETE FROM agenda WHERE nome = ?";
+            PreparedStatement preparedStatement = this.conexao.prepareStatement(query);
+            preparedStatement.setString(1, c.getNome());
+            preparedStatement.execute();
 
-    resultado = mutiplicação + somar(5,3);
-
-
-
-    public List<Contato> apagar() throws SQLException {
-        String query = "SELECT * FROM agenda";
-        List<Contato> contatos = new LinkedList<>();
-        PreparedStatement preparedStatement = conexao.prepareStatement(query);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while(resultSet.next()) {
-            Contato contato = new Contato(
-                    resultSet.getLong(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3)
-            );
-            contatos.add(contato);
+            return true;
+        }catch (SQLException sql){
+            return false;
         }
-        return contatos;
-    }*/
+
+    }
+
 
 
 
